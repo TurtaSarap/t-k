@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <link rel="icon" href="favicon.ico">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffc0cb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gizli Aşk ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff5f8a, #ff85b3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 35px 20px;
+            border-radius: 26px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+        
+        h1 {
+            font-size: clamp(24px, 5vw, 36px);
+            margin-bottom: 25px;
+        }
+        
+        .time-single {
+            font-size: clamp(20px, 4.8vw, 30px);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .message {
+            font-size: clamp(18px, 4vw, 24px);
+            font-style: italic;
+            opacity: 0;
+            transition: opacity 1s ease;
+            min-height: 50px;
+        }
+        
+        .heart {
+            font-size: clamp(36px, 8vw, 56px);
+            margin-top: 20px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        /* Login */
+        
+        .login input {
+            padding: 12px;
+            width: 80%;
+            max-width: 260px;
+            border-radius: 12px;
+            border: none;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        
+        .login button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            background: #ff5f8a;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .error {
+            margin-top: 12px;
+            color: #ffe3ea;
+            font-size: 16px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Giriş -->
+    <div class="container login" id="loginBox">
+        <h1>🔐 Gizli Giriş</h1>
+        <input type="password" id="password" placeholder="Şifreyi gir 💕">
+        <br>
+        <button onclick="checkPassword()">Giriş</button>
+        <div class="error" id="errorMsg"></div>
+    </div>
+
+    <!-- Ana içerik -->
+    <div class="container hidden" id="mainContent">
+        <h1>❤️ Birlikte Geçen Zaman ❤️</h1>
+        <div class="time-single" id="timeLine"></div>
+        <div class="message" id="loveMessage"></div>
+        <div class="heart">💞</div>
+    </div>
+
+    <script>
+        const correctPassword = "30.09.25";
+        const startDate = new Date("2025-09-30T00:00:00");
+
+        const messages = [
+            "Seni sevmek hayatımın en güzel alışkanlığı 💖",
+            "İyi ki varsın, iyi ki biziz 🥰",
+            "Her geçen saniye seni daha çok seviyorum ⏳❤️",
+            "Gülüşün en sevdiğim manzara 😊",
+            "Sen benim en güzel tesadüfümsün ✨",
+            "Adın kalbimde en güzel yerde 💘",
+            "Sen yanımdayken dünya susuyor 🌍💞"
+        ];
+
+        let messageIndex = 0;
+        const messageEl = document.getElementById("loveMessage");
+
+        // Sayfa açılınca şifre hatırlı mı?
+        function checkPassword() {
+            const input = document.getElementById("password").value;
+            const hint = document.getElementById("hint");
+
+            if (input === PASSWORD) {
+                sessionStorage.setItem("auth", "true");
+                showApp();
+            } else {
+                hint.textContent = "📅 bizim özel günümüz…";
+            }
+        }
+
+
+        function checkPassword() {
+            const input = document.getElementById("password").value;
+            const error = document.getElementById("errorMsg");
+
+            if (input === correctPassword) {
+                localStorage.setItem("loveLogin", "true");
+                openSite();
+            } else {
+                error.innerText = "İpucu 💡: Her şeyin başladığı tarih… 💕";
+            }
+        }
+
+        function openSite() {
+            document.getElementById("loginBox").classList.add("hidden");
+            document.getElementById("mainContent").classList.remove("hidden");
+            startSite();
+        }
+
+        function changeMessage() {
+            messageEl.style.opacity = 0;
+            setTimeout(() => {
+                messageEl.innerText = messages[messageIndex];
+                messageEl.style.opacity = 1;
+                messageIndex = (messageIndex + 1) % messages.length;
+            }, 800);
+        }
+
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            if (diff < 0) {
+                document.getElementById("timeLine").innerText = "Henüz başlamadı 💫";
+                return;
+            }
+
+            const totalSeconds = Math.floor(diff / 1000);
+            const days = Math.floor(totalSeconds / (3600 * 24));
+            const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            document.getElementById("timeLine").innerText =
+                `🗓️ ${days} gün • ⏰ ${hours} saat • ⌛ ${minutes} dk • ⏱️ ${seconds} sn`;
+        }
+
+        function startSite() {
+            updateCounter();
+            changeMessage();
+            setInterval(updateCounter, 1000);
+            setInterval(changeMessage, 10000);
+        }
+    </script>
+    <!-- 📲 Ana Ekrana Ekle Popup -->
+    <div id="installPopup" class="install-popup hidden">
+        <p>💗 Ana ekrana ekleyelim mi?</p>
+        <div class="buttons">
+            <button id="installBtn">Ekle</button>
+            <button id="closeBtn">Sonra</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js");
+    }
+</script>

@@ -29,16 +29,3 @@ closeBtn.addEventListener("click", () => {
     popup.classList.add("hidden");
     localStorage.setItem("installDismissed", "true");
 });
-const addHomeBtn = document.getElementById("addHomeBtn");
-
-if (addHomeBtn) {
-    addHomeBtn.addEventListener("click", async() => {
-        if (window.deferredPrompt) {
-            deferredPrompt.prompt();
-            await deferredPrompt.userChoice;
-            deferredPrompt = null;
-        } else {
-            alert("📱 iPhone'da: Safari → Paylaş → Ana Ekrana Ekle 💗");
-        }
-    });
-}

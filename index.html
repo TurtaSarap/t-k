@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gizli Aşk ❤️</title>
 
+
     <style>
         * {
             box-sizing: border-box;
@@ -149,18 +150,9 @@
         const messageEl = document.getElementById("loveMessage");
 
         // Sayfa açılınca şifre hatırlı mı?
-        function checkPassword() {
-            const input = document.getElementById("password").value;
-            const hint = document.getElementById("hint");
-
-            if (input === PASSWORD) {
-                sessionStorage.setItem("auth", "true");
-                showApp();
-            } else {
-                hint.textContent = "📅 bizim özel günümüz…";
-            }
+        if (localStorage.getItem("loveLogin") === "true") {
+            openSite();
         }
-
 
         function checkPassword() {
             const input = document.getElementById("password").value;
@@ -216,12 +208,6 @@
         }
     </script>
 
-
 </body>
 
 </html>
-<script>
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("sw.js");
-    }
-</script>
